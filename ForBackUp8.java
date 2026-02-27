@@ -1,6 +1,8 @@
 import java.util.Scanner;
 
+// CLASS BOOK for only 1 book.
 class book {
+
     String title, author;
     double price;
     boolean isBorrowed;
@@ -9,37 +11,113 @@ class book {
         title = i;
         author = j;
         price = k;
-        isBorrowed = b;
+        isBorrowed = false;
     }
 
     void displayBook() {
         System.out.print("\nTitle: " + title);
         System.out.print("\nAuthor: " + author);
-        System.out.print("\nPrice: RM" + price);
+        System.out.printf("\nPrice: RM%.2f", price);
         
-        if (isBorrowed == true) {
-            System.out.print("\nStatus: Available");
+        if (isBorrowed) {
+            System.out.print("\nStatus: Borrowed");
         } else {
-            System.out.print("\nStatus: Not Available");
+            System.out.print("\nStatus: Available");
         }
 
         System.out.print("\n");
     }
 }
 
+// CLASS LIBRARY for many books. There are include with all of manipulating logic system and save data array thing.
 class library {
 
+    book[] books = new book[100];
+    int bookCount = 0;
+
+    void addBook() {
+
+        Scanner input = new Scanner(System.in);
+        String bookTitle, bookAuthor;
+        double bookPrice;
+
+        System.out.print("\nEnter book title: ");
+        bookTitle = input.nextLine();
+
+        System.out.print("Enter author: ");
+        bookAuthor = input.nextLine();
+
+        while (true) {
+            System.out.print("Enter price: ");
+            bookPrice = input.nextDouble();
+            // nextLine() only use if use before nextDouble or nextInt thing.
+            input.nextLine();
+
+            if (bookPrice > 0) {
+                break;
+            } else {
+                System.out.print("\nInvalid! Price cannot be negative...");
+                input.nextLine();
+            }
+        }
+
+        books[bookCount] = new book(bookTitle, bookAuthor, bookPrice, false);
+
+        System.out.print("\nBook added successfully!\n");
+
+        bookCount++;
+    }
+
+    void displayAllBooks() {
+        System.out.print("\n==========================");
+        System.out.print("\n        BOOK LIST");
+        System.out.print("\n==========================");
+        System.out.print("\n");
+
+        if (bookCount == 0) {
+            System.out.print("\nNo books found!");
+        } else {
+            for (int i = 0; i < bookCount; i++) {
+                System.out.print("\nBook " + ( i + 1 ) + ":");
+                books[i].displayBook();
+                System.out.print("\n--------------------------\n");
+            }
+        }
+    }
+
+    void borrowBook() {
+        Scanner input = new Scanner(System.in);
+        int indexBorrow;
+
+        System.out.print("\n        BOOK LIST");
+        System.out.print("\n--------------------------");
+        for (int i = 0; i < bookCount; i++) {
+            System.out.print("\n" + (i + 1) + ". " + books[i].title);
+        }
+
+        System.out.print("\nEnter book number to borrow: ");
+        indexBorrow = input.nextInt();
+
+        if (indexBorrow < 0 || indexBorrow > bookCount) {
+            System.out.print("\nInvalid book number!");
+            return;
+        }
+
+        if (books[indexBorrow - 1].isBorrowed) {
+            System.out.print("\nBook already borrow.");
+        } else {
+            books[indexBorrow - 1 ].isBorrowed = true;
+            System.out.print("\nBook borrowed successfully!");
+        }
+    }
 }
 
 public class ForBackUp8 {
-    static int bookCount = 0;
-
-    public static void addBook() {
-
-    }
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
+
+        library lib = new library();
         int startMenu;
 
         while (true) {
@@ -58,8 +136,20 @@ public class ForBackUp8 {
 
             switch (startMenu) {
                 case 1:
-                    addBook();
+                    lib.addBook();
                     break;
+
+                case 2:
+                    lib.displayAllBooks();
+                    break;
+
+                case 3:
+                    lib.borrowBook();
+                    break;
+
+                case 5:
+                    System.out.print("Exiting Program...");
+                    System.exit(0);
         
                 default:
                     break;
