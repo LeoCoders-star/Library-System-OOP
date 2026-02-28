@@ -1,4 +1,7 @@
+
 import java.util.Scanner;
+
+// * This program has Shift Left Method use
 
 // CLASS BOOK for only 1 book.
 class book {
@@ -145,6 +148,38 @@ class library {
         }
 
     }
+
+    void deleteBook() {
+        Scanner input = new Scanner(System.in);
+        int indexDelete;
+
+        System.out.print("\n==========================");
+        System.out.print("\n      DELETE BOOK");
+        System.out.print("\n==========================");
+        System.out.print("\n");
+
+        for (int i = 0; i < bookCount; i++) {
+            System.out.print("\n" + (i + 1) + ". " + books[i].title);
+        }
+
+        System.out.print("\nEnter book number to delete: ");
+        indexDelete = input.nextInt();
+
+        if (indexDelete <= 0 || indexDelete > bookCount) {
+            System.out.print("\nInvalid book number!");
+            return;
+        }
+
+        // Delete Function -> Shift Left Method 
+
+        for (int i = indexDelete - 1; i < (bookCount - 1); i++) {
+            books[i] = books[i + 1];
+        }
+
+        System.out.print("\n\nBook delete successfully!");
+
+        bookCount--;
+    }
 }
 
 public class ForBackUp8 {
@@ -163,7 +198,8 @@ public class ForBackUp8 {
             System.out.print("\n2. Display All Books");
             System.out.print("\n3. Borrow Book");
             System.out.print("\n4. Return Book");
-            System.out.print("\n5. Exit");
+            System.out.print("\n5. Delete Book");
+            System.out.print("\n8. Exit");
             System.out.print("\n==========================");
 
             System.out.print("\nChoose Option: ");
@@ -185,8 +221,12 @@ public class ForBackUp8 {
                 case 4:
                     lib.returnBook();
                     break;
+                
+                case 5: 
+                    lib.deleteBook();
+                    break;
 
-                case 5:
+                case 8:
                     System.out.print("\nThank you for using Library System!");
                     System.out.print("\nProgram terminated.");
                     System.exit(0);
