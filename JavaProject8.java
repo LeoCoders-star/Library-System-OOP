@@ -1,4 +1,7 @@
+
 import java.util.Scanner;
+
+// * This program has Shift Left Method use
 
 // CLASS BOOK for only 1 book.
 class book {
@@ -98,17 +101,84 @@ class library {
         System.out.print("\nEnter book number to borrow: ");
         indexBorrow = input.nextInt();
 
-        if (indexBorrow < 0 || indexBorrow > bookCount) {
-            System.out.print("\nInvalid book number!");
+        if (indexBorrow <= 0 || indexBorrow > bookCount) {
+            System.out.print("\nInvalid book number!\n");
             return;
         }
 
         if (books[indexBorrow - 1].isBorrowed) {
-            System.out.print("\nBook already borrow.");
+            System.out.print("\nBook already borrow.\n");
         } else {
             books[indexBorrow - 1 ].isBorrowed = true;
-            System.out.print("\nBook borrowed successfully!");
+            System.out.print("\nBook borrowed successfully!\n");
         }
+    }
+
+    void returnBook() {
+        Scanner input = new Scanner(System.in);
+        int indexBorrow;
+
+        System.out.print("\n        BOOK LIST");
+        System.out.print("\n--------------------------");
+
+        for (int i = 0; i < bookCount; i++) {
+            System.out.print("\n" + (i + 1) + ". " + books[i].title);
+        }
+
+        System.out.print("\n\nEnter book number to return: ");
+        indexBorrow = input.nextInt();
+
+        if (indexBorrow <= 0 || indexBorrow > bookCount) {
+            System.out.print("\nInvalid book number!\n");
+            return;
+        } 
+
+        if (books[indexBorrow - 1].isBorrowed) {
+            books[indexBorrow - 1].isBorrowed = false;
+            System.out.print("\nBook returned successfully!\n");
+
+            for (int i = 0; i < bookCount; i++) {
+                if ((indexBorrow - 1) == i) {
+                   books[i].displayBook();
+                }
+            }
+
+        } else {
+            System.out.print("\nBook already available.\n");
+        }
+
+    }
+
+    void deleteBook() {
+        Scanner input = new Scanner(System.in);
+        int indexDelete;
+
+        System.out.print("\n==========================");
+        System.out.print("\n      DELETE BOOK");
+        System.out.print("\n==========================");
+        System.out.print("\n");
+
+        for (int i = 0; i < bookCount; i++) {
+            System.out.print("\n" + (i + 1) + ". " + books[i].title);
+        }
+
+        System.out.print("\nEnter book number to delete: ");
+        indexDelete = input.nextInt();
+
+        if (indexDelete <= 0 || indexDelete > bookCount) {
+            System.out.print("\nInvalid book number!");
+            return;
+        }
+
+        // Delete Function -> Shift Left Method 
+
+        for (int i = indexDelete - 1; i < (bookCount - 1); i++) {
+            books[i] = books[i + 1];
+        }
+
+        System.out.print("\n\nBook delete successfully!");
+
+        bookCount--;
     }
 }
 
@@ -128,7 +198,8 @@ public class JavaProject8 {
             System.out.print("\n2. Display All Books");
             System.out.print("\n3. Borrow Book");
             System.out.print("\n4. Return Book");
-            System.out.print("\n5. Exit");
+            System.out.print("\n5. Delete Book");
+            System.out.print("\n8. Exit");
             System.out.print("\n==========================");
 
             System.out.print("\nChoose Option: ");
@@ -147,8 +218,17 @@ public class JavaProject8 {
                     lib.borrowBook();
                     break;
 
-                case 5:
-                    System.out.print("Exiting Program...");
+                case 4:
+                    lib.returnBook();
+                    break;
+                
+                case 5: 
+                    lib.deleteBook();
+                    break;
+
+                case 8:
+                    System.out.print("\nThank you for using Library System!");
+                    System.out.print("\nProgram terminated.");
                     System.exit(0);
         
                 default:
