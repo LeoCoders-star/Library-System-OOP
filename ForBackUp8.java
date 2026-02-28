@@ -98,17 +98,52 @@ class library {
         System.out.print("\nEnter book number to borrow: ");
         indexBorrow = input.nextInt();
 
-        if (indexBorrow < 0 || indexBorrow > bookCount) {
-            System.out.print("\nInvalid book number!");
+        if (indexBorrow <= 0 || indexBorrow > bookCount) {
+            System.out.print("\nInvalid book number!\n");
             return;
         }
 
         if (books[indexBorrow - 1].isBorrowed) {
-            System.out.print("\nBook already borrow.");
+            System.out.print("\nBook already borrow.\n");
         } else {
             books[indexBorrow - 1 ].isBorrowed = true;
-            System.out.print("\nBook borrowed successfully!");
+            System.out.print("\nBook borrowed successfully!\n");
         }
+    }
+
+    void returnBook() {
+        Scanner input = new Scanner(System.in);
+        int indexBorrow;
+
+        System.out.print("\n        BOOK LIST");
+        System.out.print("\n--------------------------");
+
+        for (int i = 0; i < bookCount; i++) {
+            System.out.print("\n" + (i + 1) + ". " + books[i].title);
+        }
+
+        System.out.print("\n\nEnter book number to return: ");
+        indexBorrow = input.nextInt();
+
+        if (indexBorrow <= 0 || indexBorrow > bookCount) {
+            System.out.print("\nInvalid book number!\n");
+            return;
+        } 
+
+        if (books[indexBorrow - 1].isBorrowed) {
+            books[indexBorrow - 1].isBorrowed = false;
+            System.out.print("\nBook returned successfully!\n");
+
+            for (int i = 0; i < bookCount; i++) {
+                if ((indexBorrow - 1) == i) {
+                   books[i].displayBook();
+                }
+            }
+
+        } else {
+            System.out.print("\nBook already available.\n");
+        }
+
     }
 }
 
@@ -147,8 +182,13 @@ public class ForBackUp8 {
                     lib.borrowBook();
                     break;
 
+                case 4:
+                    lib.returnBook();
+                    break;
+
                 case 5:
-                    System.out.print("Exiting Program...");
+                    System.out.print("\nThank you for using Library System!");
+                    System.out.print("\nProgram terminated.");
                     System.exit(0);
         
                 default:
