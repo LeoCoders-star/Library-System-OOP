@@ -192,13 +192,36 @@ class library {
         System.out.print("\nEnter title to search: ");
         bookTitle = input.nextLine();
 
-        System.out.print("\nBook Found: \n");
-
         for (int i = 0; i < bookCount; i++) {
             if (books[i].title.equalsIgnoreCase(bookTitle)) {
+                System.out.print("\nBook Found: \n");
                 books[i].displayBook();
+            } else {
+                System.out.print("\nError! Book title not found.\n");
             }
         }
+    }
+
+    void bookStatistics() {
+        int totalBooks, borrowBooks = 0, availableBooks = 0;
+
+        System.out.print("\n==========================");
+        System.out.print("\n     LIBRARY STATISTICS");
+        System.out.print("\n==========================\n");
+
+        totalBooks = bookCount;
+
+        for (int i = 0; i < bookCount; i++) {
+            if (books[i].isBorrowed) {
+                borrowBooks++;
+            } else {
+                availableBooks++;
+            }
+        }
+
+        System.out.print("\nTotal books: " + totalBooks);
+        System.out.print("\nBorrowed books: " + borrowBooks);
+        System.out.print("\nAvailable books: " + availableBooks + "\n");
     }
 }
 
@@ -220,6 +243,7 @@ public class JavaProject8 {
             System.out.print("\n4. Return Book");
             System.out.print("\n5. Delete Book");
             System.out.print("\n6. Search Book");
+            System.out.print("\n7. Display Statistics");
             System.out.print("\n8. Exit");
             System.out.print("\n==========================");
 
@@ -249,6 +273,10 @@ public class JavaProject8 {
 
                 case 6:
                     lib.searchBook();
+                    break;
+                
+                case 7:
+                    lib.bookStatistics();
                     break;
 
                 case 8:
