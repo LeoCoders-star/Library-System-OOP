@@ -180,6 +180,26 @@ class library {
 
         bookCount--;
     }
+
+    void searchBook() {
+        Scanner input = new Scanner(System.in);
+        String bookTitle;
+
+        System.out.print("\n==========================");
+        System.out.print("\n      SEARCH BOOK");
+        System.out.print("\n==========================\n");
+
+        System.out.print("\nEnter title to search: ");
+        bookTitle = input.nextLine();
+
+        System.out.print("\nBook Found: \n");
+
+        for (int i = 0; i < bookCount; i++) {
+            if (books[i].title.equalsIgnoreCase(bookTitle)) {
+                books[i].displayBook();
+            }
+        }
+    }
 }
 
 public class JavaProject8 {
@@ -199,6 +219,7 @@ public class JavaProject8 {
             System.out.print("\n3. Borrow Book");
             System.out.print("\n4. Return Book");
             System.out.print("\n5. Delete Book");
+            System.out.print("\n6. Search Book");
             System.out.print("\n8. Exit");
             System.out.print("\n==========================");
 
@@ -224,6 +245,10 @@ public class JavaProject8 {
                 
                 case 5: 
                     lib.deleteBook();
+                    break;
+
+                case 6:
+                    lib.searchBook();
                     break;
 
                 case 8:
